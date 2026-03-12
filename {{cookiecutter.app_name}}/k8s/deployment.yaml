@@ -4,7 +4,7 @@ metadata:
   name: <+service.name>
   namespace: <+infra.namespace>
 spec:
-  replicas: <+serviceConfig.serviceDefinition.spec.variables.replicas>
+  replicas: 1
   selector:
     matchLabels:
       app: <+service.name>
