@@ -14,34 +14,12 @@ spec:
         app: <+service.name>
     spec:
       containers:
-      - name: nextjs
-        image: <+artifacts.primary.image>
+      - name: app
+        image: hashicorp/http-echo:latest
+        args:
+          - "-text=Hello from {{cookiecutter.app_name}}! Deployed via Harness IDP. Owner: {{cookiecutter.owner}}"
         ports:
-        - containerPort: 3000
-        env:
-        - name: NEXT_PUBLIC_APP_NAME
-          value: <+service.name>
-        - name: NEXT_PUBLIC_ENV
-          value: <+env.name>
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-          limits:
-            cpu: "500m"
-            memory: "512Mi"
-        livenessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /api/health
-            port: 3000
-          initialDelaySeconds: 5
-          periodSeconds: 5
+        - containerPort: 5678
 ---
 apiVersion: v1
 kind: Service
@@ -53,5 +31,5 @@ spec:
     app: <+service.name>
   ports:
   - port: 80
-    targetPort: 3000
+    targetPort: 5678
   type: LoadBalancer
