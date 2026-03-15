@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: <+service.name>
+  name: {{cookiecutter.app_name}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: <+service.name>
+      app: {{cookiecutter.app_name}}
   template:
     metadata:
       labels:
-        app: <+service.name>
+        app: {{cookiecutter.app_name}}
     spec:
       containers:
       - name: app
@@ -23,10 +23,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: <+service.name>
+  name: {{cookiecutter.app_name}}
 spec:
   selector:
-    app: <+service.name>
+    app: {{cookiecutter.app_name}}
   ports:
   - port: 80
     targetPort: 5678
